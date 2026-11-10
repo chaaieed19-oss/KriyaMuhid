@@ -356,8 +356,7 @@
         .cfg-stage.lit .cfg-glow { opacity: 1; }
         .cfg-stage g[data-g] { display: none; }
         .cfg-stage[data-product="keychain"] g[data-g="keychain"],
-        .cfg-stage[data-product="lampu"] g[data-g="lampu"],
-        .cfg-stage[data-product="set"] g[data-g="set"] { display: block; animation: cfg-in .5s ease both; }
+        .cfg-stage[data-product="lampu"] g[data-g="lampu"] { display: block; animation: cfg-in .5s ease both; }
         @keyframes cfg-in { from { opacity: 0; } to { opacity: 1; } }
         .cfg-label { font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #3A2818; margin-bottom: .6rem; display: block; }
         .cfg-chip, .cfg-sw { position: relative; display: block; cursor: pointer; }
@@ -520,7 +519,7 @@
                     <div data-speed="-0.05" class="absolute -bottom-3 -right-3 sm:-bottom-6 sm:-right-6 w-16 h-16 sm:w-32 sm:h-32 border-2 border-leaf-500 rounded-br-3xl z-0"></div>
                     
                     <div class="relative z-10 overflow-hidden rounded-2xl shadow-2xl group">
-                        <img src="https://images.unsplash.com/photo-1611145376173-69025e1a268a?q=80&w=1000&auto=format&fit=crop" alt="Pengrajin" loading="lazy" decoding="async" class="w-full h-[240px] sm:h-[400px] lg:h-[600px] object-cover transition-transform duration-1000 group-hover:scale-110">
+                        <img src="https://i.ibb.co.com/rG8LWnJV/Pengrajin-Muda-di-Bengkel-Kayu.png" alt="Pengrajin muda di bengkel kayu" loading="lazy" decoding="async" class="w-full h-[240px] sm:h-[400px] lg:h-[600px] object-cover transition-transform duration-1000 group-hover:scale-110">
                         <div class="absolute inset-0 bg-wood-900/20 group-hover:bg-transparent transition-colors duration-500"></div>
                     </div>
                     
@@ -628,8 +627,8 @@
                 </div>
 
                 <!-- Karya 4: Jam Dinding Kayu -->
-                <div class="reveal tilt-card gallery-item interactive-el bg-white rounded-[1.25rem] sm:rounded-[2rem] p-2 sm:p-4 shadow-xl border border-white" data-name="Jam Dinding Kayu" tabindex="0" role="button" aria-label="Lihat Jam Dinding Kayu">
-                    <div class="relative aspect-[4/5] overflow-hidden rounded-xl sm:rounded-2xl bg-gray-100 mb-2 sm:mb-4">
+                <div class="reveal tilt-card gallery-item interactive-el col-span-2 bg-white rounded-[1.25rem] sm:rounded-[2rem] p-2 sm:p-4 shadow-xl border border-white" data-name="Jam Dinding Kayu" tabindex="0" role="button" aria-label="Lihat Jam Dinding Kayu">
+                    <div class="relative aspect-[4/3] lg:aspect-[7/4] overflow-hidden rounded-xl sm:rounded-2xl bg-gray-100 mb-2 sm:mb-4">
                         <img src="https://i.ibb.co.com/HD76wjQr/Gemini-Generated-Image-oiosjfoiosjfoios.jpg" alt="Jam Dinding Kayu" loading="lazy" decoding="async" class="w-full h-full object-cover card-zoom-image">
                     </div>
                     <div class="tilt-content px-1 sm:px-3 pb-1 sm:pb-2 flex items-end justify-between gap-2">
@@ -684,19 +683,7 @@
                     </div>
                 </div>
 
-                <!-- Karya 8: Set Peralatan Makan -->
-                <div class="reveal delay-100 tilt-card gallery-item interactive-el bg-white rounded-[1.25rem] sm:rounded-[2rem] p-2 sm:p-4 shadow-xl border border-white" data-name="Set Peralatan Makan" data-desc="Peralatan makan berbahan kayu yang dihaluskan sempurna. Estetik, fungsional, dan aman digunakan." tabindex="0" role="button" aria-label="Lihat Set Peralatan Makan">
-                    <div class="relative aspect-[4/5] overflow-hidden rounded-xl sm:rounded-2xl bg-gray-100 mb-2 sm:mb-4">
-                        <img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600&auto=format&fit=crop" alt="Set Peralatan Makan" loading="lazy" decoding="async" class="w-full h-full object-cover card-zoom-image">
-                    </div>
-                    <div class="tilt-content px-1 sm:px-3 pb-1 sm:pb-2 flex items-end justify-between gap-2">
-                        <div class="min-w-0">
-                            <h3 class="font-serif text-sm sm:text-xl font-bold text-wood-900 leading-snug">Set Peralatan Makan</h3>
-                            <p class="text-[11px] sm:text-sm text-gray-500 mt-0.5">Peralatan Makan</p>
-                        </div>
-                        <span class="g-view" aria-hidden="true"><i class="fas fa-expand"></i></span>
-                    </div>
-                </div>
+                
 
                 <!-- Karya 9: Keychain Woody -->
                 <div class="reveal delay-200 tilt-card gallery-item interactive-el bg-white rounded-[1.25rem] sm:rounded-[2rem] p-2 sm:p-4 shadow-xl border border-white" data-name="Keychain Woody" tabindex="0" role="button" aria-label="Lihat Keychain Woody">
@@ -812,19 +799,7 @@
                             <circle cx="133" cy="62" r="3" fill="#2B211B"/>
                             <path class="cfg-grain" d="M72 138 Q98 128 124 138 M76 152 Q98 144 120 152 M82 126 Q94 118 106 126"/>
                         </g>
-                        <g data-g="set">
-                            <ellipse class="cfg-wood" cx="58" cy="58" rx="20" ry="28"/>
-                            <rect class="cfg-wood" x="53" y="80" width="10" height="96" rx="5"/>
-                            <rect class="cfg-wood" x="94" y="34" width="5" height="34" rx="2.5"/>
-                            <rect class="cfg-wood" x="102" y="34" width="5" height="34" rx="2.5"/>
-                            <rect class="cfg-wood" x="110" y="34" width="5" height="34" rx="2.5"/>
-                            <rect class="cfg-wood" x="118" y="34" width="5" height="34" rx="2.5"/>
-                            <rect class="cfg-wood" x="92" y="64" width="34" height="16" rx="8"/>
-                            <rect class="cfg-wood" x="103" y="78" width="10" height="98" rx="5"/>
-                            <path class="cfg-wood" d="M146 38 Q172 46 168 106 L146 106 Z"/>
-                            <rect class="cfg-wood" x="146" y="102" width="22" height="74" rx="9"/>
-                            <path class="cfg-grain" d="M58 40 V66 M108 90 V160 M157 112 V164"/>
-                        </g>
+                        
                     </svg>
                     <p id="cfgName" class="cfg-name absolute bottom-3 md:bottom-4 inset-x-0 text-center font-serif font-bold text-base md:text-lg">Sheedz Keychain</p>
                 </div>
@@ -832,10 +807,10 @@
                 <div class="reveal reveal-right bg-white rounded-[2rem] border border-wood-100 shadow-xl p-5 sm:p-6 md:p-8 space-y-5">
                     <fieldset>
                         <legend class="cfg-label">Produk</legend>
-                        <div class="grid grid-cols-3 gap-2">
+                        <div class="grid grid-cols-2 gap-2">
                             <label class="cfg-chip"><input type="radio" name="cfgProduct" value="keychain" checked><span>Keychain</span></label>
                             <label class="cfg-chip"><input type="radio" name="cfgProduct" value="lampu"><span>Lampu Itik</span></label>
-                            <label class="cfg-chip"><input type="radio" name="cfgProduct" value="set"><span>Set Makan</span></label>
+                            
                         </div>
                     </fieldset>
                     <fieldset>
@@ -1491,8 +1466,7 @@
 
             const PRODUK = {
                 keychain: { name: 'Sheedz Keychain' },
-                lampu:    { name: 'Lampu Hias Itik Alabio' },
-                set:      { name: 'Set Peralatan Makan' }
+                lampu: { name: 'Lampu Hias Itik Alabio' }
             };
             const FINISH = {
                 natural: { label: 'Natural', color: '#C9A27A', dark: false },
