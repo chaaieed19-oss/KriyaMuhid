@@ -411,9 +411,10 @@
         .hero-bg { position: absolute; inset: 0; z-index: 0; will-change: transform; }
         .hero-bg-inner { position: absolute; left: 0; top: 0; width: 100%; height: 100%; animation: kenburns 26s ease-in-out infinite alternate; }
         .hero-bg-inner picture { display: block; width: 100%; height: 100%; }
-        .hero-bg-inner img { display: block; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.4s ease; }
+        .hero-bg-inner img { display: block; width: 100%; height: 100%; object-fit: cover; animation: hero-fade 1.4s ease both; }
         .hero-bg-inner img.loaded { opacity: 1; }
         @keyframes kenburns { from { transform: scale(1.06); } to { transform: scale(1.14); } }
+        @keyframes hero-fade { from { opacity: 0; } to { opacity: 1; } }
         .hero-scrim {
             position: absolute; inset: 0; z-index: 0; pointer-events: none;
             background:
@@ -431,8 +432,7 @@
         /* cahaya lampu berdenyut */
         .hero-glow {
             position: absolute; width: 26%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%;
-            pointer-events: none; mix-blend-mode: screen;
-            background: radial-gradient(circle, rgba(255,220,150,.6) 0%, rgba(255,170,70,.28) 34%, rgba(255,150,50,0) 68%);
+            pointer-events: none; background: radial-gradient(circle, rgba(255,220,150,.6) 0%, rgba(255,170,70,.28) 34%, rgba(255,150,50,0) 68%);
             animation: lamp-pulse 3.4s ease-in-out infinite;
         }
         .hero-glow[hidden] { display: none; }
@@ -442,7 +442,7 @@
         }
         /* spotlight mengikuti kursor */
         .hero-spot {
-            position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; transition: opacity .5s ease; mix-blend-mode: screen;
+            position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; transition: opacity .5s ease;
             background: radial-gradient(circle 260px at var(--sx, 50%) var(--sy, 50%), rgba(255,214,150,.18), transparent 70%);
         }
         .hero-section.spot-on .hero-spot { opacity: 1; }
@@ -566,7 +566,7 @@
             <div class="hero-bg-inner" id="heroBgInner">
                 <picture>
                     <source media="(max-width: 767px)" srcset="https://i.ibb.co.com/dwqnLkB8/file-00000000f9c8820788428c1c1ee10e82.png">
-                    <img id="heroImg" src="https://i.ibb.co.com/v6MyFVSw/file-0000000004088207bb66a9067fdf6090.png" alt="Pengrajin muda memahat kayu di bengkel Kriya Muhid" fetchpriority="high" decoding="async">
+                    <img id="heroImg" src="https://i.ibb.co.com/v6MyFVSw/file-0000000004088207bb66a9067fdf6090.png" alt="Pengrajin muda memahat kayu di bengkel Kriya Muhid" fetchpriority="high" decoding="async" referrerpolicy="no-referrer">
                 </picture>
                 <span class="hero-glow" id="heroGlow" hidden></span>
             </div>
@@ -978,15 +978,6 @@
                             <div class="ml-4 md:ml-6">
                                 <h4 class="text-xl md:text-2xl font-serif font-bold text-white mb-2">Penyelamatan Emisi</h4>
                                 <p class="text-gray-400 leading-relaxed">Mencegah pembakaran kayu yang menghasilkan polusi udara berlebih.</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start group">
-                            <div class="flex-shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-wood-800 border border-wood-700 flex items-center justify-center text-wood-300  text-xl md:text-2xl group-hover:bg-wood-500 group-hover:text-white transition-all duration-300 shadow-lg">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div class="ml-4 md:ml-6">
-                                <h4 class="text-xl md:text-2xl font-serif font-bold text-white mb-2">Pemberdayaan Warga</h4>
-                                <p class="text-gray-400 leading-relaxed">Pendapatan yang adil (fair trade) bagi puluhan pemuda dan seniman lokal.</p>
                             </div>
                         </div>
                     </div>
@@ -1727,10 +1718,11 @@
             const mq = window.matchMedia('(max-width: 767px)');
 
             function layout() {
-                const cfg = mq.matches ? HERO_CFG.mobile : HERO_CFG.desktop;
+                const useMob = mq.matches || img.dataset.variant === 'mob';
+                const cfg = useMob ? HERO_CFG.mobile : HERO_CFG.desktop;
                 const hw = hero.clientWidth, hh = hero.clientHeight;
-                const iw = img.naturalWidth || (mq.matches ? 1080 : 1920);
-                const ih = img.naturalHeight || (mq.matches ? 1920 : 1080);
+                const iw = img.naturalWidth || (useMob ? 1080 : 1920);
+                const ih = img.naturalHeight || (useMob ? 1920 : 1080);
                 const sc = Math.max(hw / iw, hh / ih);
                 const dw = iw * sc, dh = ih * sc;
                 inner.style.width = dw + 'px';
@@ -1750,6 +1742,21 @@
             }
             const markLoaded = () => { img.classList.add('loaded'); layout(); };
             if (img.complete && img.naturalWidth) markLoaded(); else img.addEventListener('load', markLoaded);
+
+            // Cadangan bila foto gagal dimuat (mis. domain ibb.co.com diblokir jaringan/ekstensi tertentu):
+            // 1) coba domain ibb.co, 2) di desktop pakai foto 9:16 sebagai pengganti
+            const srcEl = inner.querySelector('source');
+            const srcMob = srcEl ? srcEl.getAttribute('srcset') : null;
+            const mirror = (u) => u.replace('//i.ibb.co.com/', '//i.ibb.co/');
+            const queue = [mirror(img.currentSrc || img.src)];
+            if (!mq.matches && srcMob) queue.push(srcMob, mirror(srcMob));
+            img.addEventListener('error', () => {
+                const next = queue.shift();
+                if (!next) { console.warn('Foto hero gagal dimuat dari semua sumber.'); return; }
+                inner.querySelectorAll('source').forEach(el => el.remove());
+                if (srcMob && (next === srcMob || next === mirror(srcMob))) img.dataset.variant = 'mob';
+                img.src = next;
+            });
             layout();
             window.addEventListener('resize', layout);
             if ('ResizeObserver' in window) new ResizeObserver(layout).observe(hero);
@@ -1842,6 +1849,16 @@
                 if (!raf) raf = requestAnimationFrame(loop);
             }, { passive: true });
         })();
+
+        // 18. CADANGAN DOMAIN GAMBAR: bila i.ibb.co.com gagal, coba sekali lewat i.ibb.co
+        document.addEventListener('error', (e) => {
+            const t = e.target;
+            if (!t || t.tagName !== 'IMG' || t.id === 'heroImg' || t.dataset.mirror) return;
+            if (t.src && t.src.indexOf('//i.ibb.co.com/') !== -1) {
+                t.dataset.mirror = '1';
+                t.src = t.src.replace('//i.ibb.co.com/', '//i.ibb.co/');
+            }
+        }, true);
     </script>
 </body>
 </html>
