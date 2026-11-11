@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Kriya Muhid — suvenir & kerajinan handmade dari limbah kayu lokal Hulu Sungai Utara.">
     <meta name="theme-color" content="#3A2818">
-    <noscript><style>#preloader{display:none}.reveal{opacity:1;transform:none}html.is-loading{overflow:auto}</style></noscript>
+    <noscript><style>#preloader{display:none}.reveal{opacity:1;transform:none}html.is-loading{overflow:auto}.hero-bg-inner img{opacity:1}</style></noscript>
     <title>Kriya Muhid | Suvenir & Kerajinan Limbah Kayu Premium</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Allura&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -92,7 +92,7 @@
             backdrop-filter: blur(12px);
         }
         .hero-pattern {
-            background-image: linear-gradient(rgba(58, 40, 24, 0.8), rgba(58, 40, 24, 0.6)), url('https://images.unsplash.com/photo-1546514355-7fdc90ccbc0a?q=80&w=2070&auto=format&fit=crop');
+            background-image: linear-gradient(135deg, #3A2818, #5C4033);
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -407,6 +407,93 @@
             .lb-cap { text-align: left; }
             .lb-nav { bottom: auto; top: 50%; transform: translateY(-50%); }
         }
+        /* ============ HERO FOTO (16:9 desktop / 9:16 HP) ============ */
+        .hero-bg { position: absolute; inset: 0; z-index: 0; will-change: transform; }
+        .hero-bg-inner { position: absolute; left: 0; top: 0; width: 100%; height: 100%; animation: kenburns 26s ease-in-out infinite alternate; }
+        .hero-bg-inner picture { display: block; width: 100%; height: 100%; }
+        .hero-bg-inner img { display: block; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.4s ease; }
+        .hero-bg-inner img.loaded { opacity: 1; }
+        @keyframes kenburns { from { transform: scale(1.06); } to { transform: scale(1.14); } }
+        .hero-scrim {
+            position: absolute; inset: 0; z-index: 0; pointer-events: none;
+            background:
+                linear-gradient(90deg, rgba(29,19,11,.72) 0%, rgba(29,19,11,.42) 38%, rgba(29,19,11,0) 65%),
+                linear-gradient(0deg, rgba(29,19,11,.7) 0%, rgba(29,19,11,0) 32%),
+                linear-gradient(180deg, rgba(29,19,11,.55) 0%, rgba(29,19,11,0) 20%);
+        }
+        @media (max-width: 1023px) {
+            .hero-scrim {
+                background:
+                    linear-gradient(0deg, rgba(29,19,11,.93) 0%, rgba(29,19,11,.75) 42%, rgba(29,19,11,.15) 78%),
+                    linear-gradient(180deg, rgba(29,19,11,.55) 0%, rgba(29,19,11,0) 18%);
+            }
+        }
+        /* cahaya lampu berdenyut */
+        .hero-glow {
+            position: absolute; width: 26%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%;
+            pointer-events: none; mix-blend-mode: screen;
+            background: radial-gradient(circle, rgba(255,220,150,.6) 0%, rgba(255,170,70,.28) 34%, rgba(255,150,50,0) 68%);
+            animation: lamp-pulse 3.4s ease-in-out infinite;
+        }
+        .hero-glow[hidden] { display: none; }
+        @keyframes lamp-pulse {
+            0%, 100% { opacity: .75; transform: translate(-50%, -50%) scale(.94); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.06); }
+        }
+        /* spotlight mengikuti kursor */
+        .hero-spot {
+            position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; transition: opacity .5s ease; mix-blend-mode: screen;
+            background: radial-gradient(circle 260px at var(--sx, 50%) var(--sy, 50%), rgba(255,214,150,.18), transparent 70%);
+        }
+        .hero-section.spot-on .hero-spot { opacity: 1; }
+        /* serutan kayu melayang */
+        .hero-shavings { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+        .shaving {
+            position: absolute; bottom: -6%; width: var(--s); height: calc(var(--s) * .4); opacity: 0;
+            border-radius: 100% 0 100% 0 / 100% 0 100% 0; background: linear-gradient(135deg, #F3C98B, #C9975B);
+            animation: shave 20s linear infinite;
+        }
+        @keyframes shave {
+            0% { transform: translate3d(0, 0, 0) rotate(0); opacity: 0; }
+            10% { opacity: .6; }
+            50% { transform: translate3d(var(--dx), -55vh, 0) rotate(200deg); }
+            90% { opacity: .5; }
+            100% { transform: translate3d(calc(var(--dx) * -.6), -115vh, 0) rotate(420deg); opacity: 0; }
+        }
+        /* sapaan + nama brand */
+        .hero-greet {
+            font-family: 'Allura', 'Playfair Display', cursive; font-size: clamp(1.8rem, min(4.2vw, 5vh), 3rem);
+            color: #F5F0EA; line-height: 1; margin-bottom: .2rem; display: inline-flex; align-items: center; gap: 1rem;
+        }
+        .hero-greet::after { content: ""; height: 1px; width: 0; background: rgba(245,240,234,.6); transition: width 1.4s .8s ease; }
+        .hero-in .hero-greet::after { width: clamp(3rem, 10vw, 8rem); }
+        .hero-brand {
+            font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(2.8rem, min(8vw, 10.5vh), 6.8rem);
+            line-height: 1.02; letter-spacing: -.01em; color: #fff; margin-bottom: .9rem; text-shadow: 0 6px 30px rgba(0,0,0,.35);
+        }
+        .hero-brand .ch {
+            display: inline-block; opacity: 0; transform: translateY(55%) rotate(6deg); filter: blur(10px);
+            transition: opacity .9s ease, transform .9s cubic-bezier(.2,.8,.2,1), filter .9s ease;
+            transition-delay: calc(var(--i) * 70ms + 300ms);
+        }
+        .hero-in .hero-brand .ch { opacity: 1; transform: none; filter: none; }
+        .hb-b { font-style: italic; filter: drop-shadow(0 0 16px rgba(233,181,107,.35)); }
+        .hb-b .ch { background: linear-gradient(180deg, #FFE3B0, #E9B56B); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; text-shadow: none; }
+        /* motto kanan-bawah */
+        .hero-motto-line { display: block; height: 1px; width: clamp(4rem, 12vw, 10rem); background: rgba(255,255,255,.5); transform-origin: right; animation: line-grow 1.6s 1.4s ease both; }
+        @keyframes line-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+        .hm { color: rgba(255,255,255,.75); animation: hm-glow 6s ease-in-out infinite; }
+        .hm2 { animation-delay: 2s; } .hm3 { animation-delay: 4s; }
+        @keyframes hm-glow { 0%, 30%, 100% { color: rgba(255,255,255,.75); } 12% { color: #F3C98B; } }
+        /* ticker: kecepatan ikut kecepatan scroll */
+        .ticker { background: #3A2818; border-top: 1px solid rgba(212,184,149,.2); border-bottom: 1px solid rgba(212,184,149,.2); overflow: hidden; position: relative; z-index: 2; }
+        .ticker-skew { will-change: transform; }
+        .ticker-track { display: flex; width: max-content; padding: .8rem 0; align-items: center; white-space: nowrap; animation: ticker 40s linear infinite; }
+        .ticker:hover .ticker-track { animation-play-state: paused; }
+        .ticker-group { display: flex; align-items: center; flex: none; }
+        .ticker-item { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1.05rem, 2.4vw, 1.5rem); color: #D4B895; padding: 0 1.25rem; }
+        .ticker-dot { color: #A67B5B; font-size: .45rem; }
+        @keyframes ticker { to { transform: translateX(-50%); } }
     </style>
 </head>
 <body class="bg-wood-100 text-wood-900 font-sans antialiased overflow-x-hidden selection:bg-wood-500 selection:text-white">
@@ -473,31 +560,57 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero-section relative min-h-screen flex items-center justify-center hero-pattern overflow-hidden pt-28 pb-24">
+    <section class="hero-section relative min-h-screen flex items-end lg:items-start justify-center hero-pattern overflow-hidden pt-28 lg:pt-[max(7rem,15vh)] pb-36 sm:pb-28 lg:pb-24">
+        <!-- Latar foto: 16:9 untuk desktop, 9:16 untuk HP -->
+        <div class="hero-bg" id="heroBg">
+            <div class="hero-bg-inner" id="heroBgInner">
+                <picture>
+                    <source media="(max-width: 767px)" srcset="https://i.ibb.co.com/dwqnLkB8/file-00000000f9c8820788428c1c1ee10e82.png">
+                    <img id="heroImg" src="https://i.ibb.co.com/v6MyFVSw/file-0000000004088207bb66a9067fdf6090.png" alt="Pengrajin muda memahat kayu di bengkel Kriya Muhid" fetchpriority="high" decoding="async">
+                </picture>
+                <span class="hero-glow" id="heroGlow" hidden></span>
+            </div>
+        </div>
+        <div class="hero-scrim" aria-hidden="true"></div>
         <!-- Particles container -->
         <div id="particles" class="absolute inset-0 z-0"></div>
         <div class="hero-lines" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        <div class="hero-shavings" aria-hidden="true"></div>
+        <div class="hero-spot" id="heroSpot" aria-hidden="true"></div>
         
-        <div class="text-center px-4 max-w-5xl mx-auto relative z-10" id="hero-content">
-            <span class="reveal block text-wood-300 text-xs sm:text-sm md:text-base font-semibold tracking-[0.12em] sm:tracking-[0.2em] uppercase mb-6 drop-shadow-md">
+        <div class="text-center lg:text-left px-4 lg:pl-[max(3rem,6vw)] lg:pr-12 w-full max-w-7xl lg:max-w-none mx-auto lg:mx-0 relative z-10" id="hero-content">
+            <div class="max-w-2xl mx-auto lg:mx-0">
+            <p class="hero-greet reveal">Selamat Datang di</p>
+            <p class="hero-brand"><span class="sr-only">Kriya Muhid</span><span data-split>Kriya</span> <span class="hb-b" data-split>Muhid</span></p>
+            <span class="reveal block text-wood-300 text-xs sm:text-sm md:text-base font-semibold tracking-[0.12em] sm:tracking-[0.2em] uppercase mb-3 md:mb-4 drop-shadow-md">
                 "Napa Pian Handak, Ulun Ulah Akan!"
             </span>
-            <h1 class="reveal delay-100 text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif text-white font-bold mb-6 leading-[1.1] drop-shadow-2xl">
-                Napas Baru <br> <span class="italic text-wood-300 font-light">Sisa Kayu</span> Lokal.
+            <h1 class="reveal delay-100 text-2xl sm:text-3xl md:text-4xl font-serif text-white font-bold mb-4 leading-[1.1] drop-shadow-2xl">
+                Napas Baru <br class="lg:hidden"> <span class="italic text-wood-300 font-light">Sisa Kayu</span> Lokal.
             </h1>
-            <p class="reveal delay-200 text-gray-200 text-base sm:text-lg md:text-2xl mb-10 md:mb-12 font-light max-w-3xl mx-auto drop-shadow-md">
+            <p class="reveal delay-200 text-gray-200 text-sm sm:text-lg md:text-xl mb-6 md:mb-8 font-light max-w-xl lg:max-w-md mx-auto lg:mx-0 drop-shadow-md">
                 100% Handmade. Mengubah kayu sisa menjadi mahakarya estetik dan fungsional. 
             </p>
-            <div class="reveal delay-300 flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
-                <a href="#koleksi" class="interactive-el magnetic bg-wood-500/90 backdrop-blur text-white px-8 sm:px-10 py-3.5 sm:py-4 rounded-full text-base sm:text-lg font-medium hover:bg-wood-700 transition-all shadow-xl hover:shadow-wood-500/50 flex items-center justify-center gap-3 group">
+            <div class="reveal delay-300 flex flex-col sm:flex-row justify-center lg:justify-start gap-4 sm:gap-6">
+                <a href="#koleksi" class="interactive-el magnetic bg-wood-500/90 backdrop-blur text-white px-8 sm:px-10 py-3 sm:py-4 lg:py-3 rounded-full text-base sm:text-lg lg:text-base font-medium hover:bg-wood-700 transition-all shadow-xl hover:shadow-wood-500/50 flex items-center justify-center gap-3 group">
                     Eksplor Koleksi <i class="fas fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
                 </a>
-                <a href="#tentang" class="interactive-el magnetic bg-transparent border-2 border-white/50 text-white px-8 sm:px-10 py-3.5 sm:py-4 rounded-full text-base sm:text-lg font-medium hover:bg-white hover:text-wood-900 transition-all backdrop-blur-sm">
+                <a href="#tentang" class="interactive-el magnetic bg-transparent border-2 border-white/50 text-white px-8 sm:px-10 py-3 sm:py-4 lg:py-3 rounded-full text-base sm:text-lg lg:text-base font-medium hover:bg-white hover:text-wood-900 transition-all backdrop-blur-sm">
                     Cerita Kami
                 </a>
             </div>
+            </div>
         </div>
-        
+
+        <!-- WhatsApp & motto (desktop) -->
+        <div class="hidden lg:flex absolute left-[max(3rem,6vw)] bottom-10 z-10 items-center gap-3">
+            <a href="https://wa.me/6283150824476" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="interactive-el w-12 h-12 rounded-full border border-white/50 text-white flex items-center justify-center hover:bg-white hover:text-wood-900 transition-all"><i class="fab fa-whatsapp text-lg"></i></a>
+        </div>
+        <div class="hidden lg:flex absolute right-12 bottom-10 z-10 items-center gap-4 italic text-sm">
+            <span class="hero-motto-line"></span>
+            <span class="hm hm1">Berkarya</span><span class="text-white/50">&bull;</span><span class="hm hm2">Berkreasi</span><span class="text-white/50">&bull;</span><span class="hm hm3">Menginspirasi</span>
+        </div>
+
         <!-- Scroll indicator -->
         <div class="scroll-ind absolute bottom-8 sm:bottom-10 inset-x-0 z-10 flex justify-center pointer-events-none">
             <div class="flex flex-col items-center animate-bounce opacity-70">
@@ -506,6 +619,13 @@
             </div>
         </div>
     </section>
+
+    <!-- Ticker (kecepatan mengikuti scroll) -->
+    <div class="ticker" aria-hidden="true">
+        <div class="ticker-skew" id="tickerSkew">
+            <div class="ticker-track" id="tickerTrack"><div class="ticker-group"><span class="ticker-item">Handmade</span><i class="fas fa-circle ticker-dot"></i><span class="ticker-item">Limbah Kayu Lokal</span><i class="fas fa-circle ticker-dot"></i><span class="ticker-item">Ramah Lingkungan</span><i class="fas fa-circle ticker-dot"></i><span class="ticker-item">Dibuat di Hulu Sungai Utara</span><i class="fas fa-circle ticker-dot"></i><span class="ticker-item">Karya Sederhana, Penuh Makna</span><i class="fas fa-circle ticker-dot"></i></div><div class="ticker-group"><span class="ticker-item">Handmade</span><i class="fas fa-circle ticker-dot"></i><span class="ticker-item">Limbah Kayu Lokal</span><i class="fas fa-circle ticker-dot"></i><span class="ticker-item">Ramah Lingkungan</span><i class="fas fa-circle ticker-dot"></i><span class="ticker-item">Dibuat di Hulu Sungai Utara</span><i class="fas fa-circle ticker-dot"></i><span class="ticker-item">Karya Sederhana, Penuh Makna</span><i class="fas fa-circle ticker-dot"></i></div><div class="ticker-group"><span class="ticker-item">Handmade</span><i class="fas fa-circle ticker-dot"></i><span class="ticker-item">Limbah Kayu Lokal</span><i class="fas fa-circle ticker-dot"></i><span class="ticker-item">Ramah Lingkungan</span><i class="fas fa-circle ticker-dot"></i><span class="ticker-item">Dibuat di Hulu Sungai Utara</span><i class="fas fa-circle ticker-dot"></i><span class="ticker-item">Karya Sederhana, Penuh Makna</span><i class="fas fa-circle ticker-dot"></i></div><div class="ticker-group"><span class="ticker-item">Handmade</span><i class="fas fa-circle ticker-dot"></i><span class="ticker-item">Limbah Kayu Lokal</span><i class="fas fa-circle ticker-dot"></i><span class="ticker-item">Ramah Lingkungan</span><i class="fas fa-circle ticker-dot"></i><span class="ticker-item">Dibuat di Hulu Sungai Utara</span><i class="fas fa-circle ticker-dot"></i><span class="ticker-item">Karya Sederhana, Penuh Makna</span><i class="fas fa-circle ticker-dot"></i></div></div>
+        </div>
+    </div>
 
     <!-- Tentang Kami -->
     <section id="tentang" class="py-14 sm:py-20 md:py-32 bg-white relative overflow-hidden">
@@ -1184,6 +1304,7 @@
         function startReveal() {
             if (revealObserver) return;
             const hl = document.querySelector('.hero-lines'); if (hl) hl.classList.add('on');
+            const hs = document.querySelector('.hero-section'); if (hs) hs.classList.add('hero-in');
             if (!('IntersectionObserver' in window)) {
                 revealElements.forEach(el => el.classList.add('active', 'tilt-ready'));
                 return;
@@ -1584,6 +1705,141 @@
             lb.addEventListener('touchend', (e) => {
                 const dx = e.changedTouches[0].clientX - tx;
                 if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
+            }, { passive: true });
+        })();
+
+        // 16. HERO FOTO: layout responsif, Ken Burns, parallax scroll + mouse, cahaya lampu, huruf nama brand, spotlight, serutan kayu
+        (function () {
+            const hero = document.querySelector('.hero-section');
+            const bg = document.getElementById('heroBg');
+            const inner = document.getElementById('heroBgInner');
+            const img = document.getElementById('heroImg');
+            const glow = document.getElementById('heroGlow');
+            const spot = document.getElementById('heroSpot');
+            if (!hero || !bg || !inner || !img) return;
+
+            // Atur di sini: focus = titik foto yang dijaga selalu terlihat (0-1),
+            // glow = posisi cahaya lampu (x, y; 0-1) pada foto, atau null jika tidak ada.
+            const HERO_CFG = {
+                desktop: { focus: [0.6, 0.5], glow: [0.308, 0.689] },
+                mobile:  { focus: [0.5, 0.5], glow: null }
+            };
+            const mq = window.matchMedia('(max-width: 767px)');
+
+            function layout() {
+                const cfg = mq.matches ? HERO_CFG.mobile : HERO_CFG.desktop;
+                const hw = hero.clientWidth, hh = hero.clientHeight;
+                const iw = img.naturalWidth || (mq.matches ? 1080 : 1920);
+                const ih = img.naturalHeight || (mq.matches ? 1920 : 1080);
+                const sc = Math.max(hw / iw, hh / ih);
+                const dw = iw * sc, dh = ih * sc;
+                inner.style.width = dw + 'px';
+                inner.style.height = dh + 'px';
+                inner.style.left = -(dw - hw) * cfg.focus[0] + 'px';
+                inner.style.top = -(dh - hh) * cfg.focus[1] + 'px';
+                inner.style.transformOrigin = (cfg.focus[0] * 100) + '% ' + (cfg.focus[1] * 100) + '%';
+                if (glow) {
+                    if (cfg.glow) {
+                        glow.style.left = cfg.glow[0] * 100 + '%';
+                        glow.style.top = cfg.glow[1] * 100 + '%';
+                        glow.hidden = false;
+                    } else {
+                        glow.hidden = true;
+                    }
+                }
+            }
+            const markLoaded = () => { img.classList.add('loaded'); layout(); };
+            if (img.complete && img.naturalWidth) markLoaded(); else img.addEventListener('load', markLoaded);
+            layout();
+            window.addEventListener('resize', layout);
+            if ('ResizeObserver' in window) new ResizeObserver(layout).observe(hero);
+            if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+
+            // Huruf nama brand muncul satu per satu
+            let n = 0;
+            hero.querySelectorAll('[data-split]').forEach(word => {
+                const text = word.textContent.trim();
+                word.textContent = '';
+                [...text].forEach(c => {
+                    const ch = document.createElement('span');
+                    ch.className = 'ch';
+                    ch.setAttribute('aria-hidden', 'true');
+                    ch.style.setProperty('--i', n++);
+                    ch.textContent = c;
+                    word.appendChild(ch);
+                });
+            });
+
+            // Parallax foto: scroll + mouse
+            let sy = 0, mx = 0, my = 0, tx = 0, ty = 0, rafP = null, visible = true;
+            function applyBg() {
+                mx += (tx - mx) * 0.08;
+                my += (ty - my) * 0.08;
+                bg.style.transform = `translate3d(${mx.toFixed(1)}px, ${(sy * 0.25 + my).toFixed(1)}px, 0)`;
+                rafP = (Math.abs(tx - mx) + Math.abs(ty - my) > 0.1) ? requestAnimationFrame(applyBg) : null;
+            }
+            const kickBg = () => { if (!rafP) rafP = requestAnimationFrame(applyBg); };
+            if ('IntersectionObserver' in window) {
+                new IntersectionObserver((e) => { visible = e[0].isIntersecting; }).observe(hero);
+            }
+            window.addEventListener('scroll', () => { if (!visible) return; sy = window.scrollY; kickBg(); }, { passive: true });
+
+            if (finePointer) {
+                hero.addEventListener('mousemove', (e) => {
+                    const r = hero.getBoundingClientRect();
+                    const x = e.clientX - r.left, y = e.clientY - r.top;
+                    tx = -(x / r.width - 0.5) * 26;
+                    ty = -(y / r.height - 0.5) * 18;
+                    spot.style.setProperty('--sx', x + 'px');
+                    spot.style.setProperty('--sy', y + 'px');
+                    hero.classList.add('spot-on');
+                    kickBg();
+                });
+                hero.addEventListener('mouseleave', () => { tx = 0; ty = 0; hero.classList.remove('spot-on'); kickBg(); });
+            }
+
+            // Serutan kayu melayang
+            const sh = hero.querySelector('.hero-shavings');
+            if (sh) {
+                const count = window.innerWidth < 640 ? 5 : 9;
+                for (let i = 0; i < count; i++) {
+                    const el = document.createElement('span');
+                    el.className = 'shaving';
+                    el.style.left = (Math.random() * 92 + 4) + '%';
+                    el.style.setProperty('--s', (Math.random() * 14 + 14) + 'px');
+                    el.style.setProperty('--dx', (Math.random() * 160 - 80) + 'px');
+                    el.style.animationDuration = (Math.random() * 10 + 16) + 's';
+                    el.style.animationDelay = (-Math.random() * 20) + 's';
+                    sh.appendChild(el);
+                }
+            }
+        })();
+
+        // 17. TICKER: melaju lebih cepat dan miring tipis mengikuti kecepatan scroll
+        (function () {
+            const track = document.getElementById('tickerTrack');
+            const skewEl = document.getElementById('tickerSkew');
+            if (!track || !skewEl) return;
+            let vel = 0, last = window.scrollY, dir = 1, raf = null;
+            function loop() {
+                vel *= 0.92;
+                const rate = 1 + Math.min(Math.abs(vel) * 0.25, 9);
+                const anim = track.getAnimations ? track.getAnimations()[0] : null;
+                if (anim) anim.playbackRate = dir * rate;
+                skewEl.style.transform = `skewX(${Math.max(-8, Math.min(8, -vel * 0.12)).toFixed(2)}deg)`;
+                if (Math.abs(vel) > 0.05) {
+                    raf = requestAnimationFrame(loop);
+                } else {
+                    raf = null;
+                    skewEl.style.transform = '';
+                    if (anim) anim.playbackRate = dir;
+                }
+            }
+            window.addEventListener('scroll', () => {
+                const y = window.scrollY, d = y - last;
+                last = y;
+                if (d) { dir = d > 0 ? 1 : -1; vel += d; }
+                if (!raf) raf = requestAnimationFrame(loop);
             }, { passive: true });
         })();
     </script>
